@@ -28,20 +28,6 @@ if [[ "$fatal" -eq 1 ]]; then
   exit 1
 fi
 
-function _get_value {
-  if [[ -z "$1" ]]; then
-    echo '$1 not provided.' >&2
-    return
-  fi
-
-  if [[ -n "$2" ]]; then
-    echo "$2"
-  else
-    echo "$1"
-  fi
-}
-
-
 # set odoo database host, port, user and password
 : ${PGHOST:=$DB_PORT_5432_TCP_ADDR}
 : ${PGPORT:=$DB_PORT_5432_TCP_PORT}
@@ -49,7 +35,7 @@ function _get_value {
 : ${PGPASSWORD:=$DB_ENV_POSTGRES_PASSWORD}
 export PGHOST PGPORT PGUSER PGPASSWORD
 
-database="$(_get_value "$DB_ENV_POSTGRES_USER" "$DB_ENV_POSTGRES_DB")"
+: ${database:=${DB_ENV_POSTGRES_DB:=$DB_ENV_POSTGRES_USER}}
 
 case "$1" in
   --)
