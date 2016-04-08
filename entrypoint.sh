@@ -33,9 +33,8 @@ fi
 : ${PGPORT:=$DB_PORT_5432_TCP_PORT}
 : ${PGUSER:=${DB_ENV_POSTGRES_USER:='postgres'}}
 : ${PGPASSWORD:=$DB_ENV_POSTGRES_PASSWORD}
-export PGHOST PGPORT PGUSER PGPASSWORD
-
-: ${database:=${DB_ENV_POSTGRES_DB:=$DB_ENV_POSTGRES_USER}}
+: ${PGDATABASE:=${DB_ENV_POSTGRES_DB:=$DB_ENV_POSTGRES_USER}}
+export PGHOST PGPORT PGUSER PGPASSWORD PGDATABASE
 
 case "$1" in
   --)
@@ -44,8 +43,8 @@ case "$1" in
       --config='/etc/odoo/openerp-server.conf' \
       --db_host="$DB_PORT_5432_TCP_ADDR" \
       --db_port="$DB_PORT_5432_TCP_PORT" \
-      --database="$database" \
-      --db-filter="$database" \
+      --database="$PGDATABASE" \
+      --db-filter="$PGDATABASE" \
       --db_user="$DB_ENV_POSTGRES_USER" \
       --db_password="$DB_ENV_POSTGRES_PASSWORD" \
       "$@"
@@ -55,8 +54,8 @@ case "$1" in
       --config='/etc/odoo/openerp-server.conf' \
       --db_host="$DB_PORT_5432_TCP_ADDR" \
       --db_port="$DB_PORT_5432_TCP_PORT" \
-      --database="$database" \
-      --db-filter="$database" \
+      --database="$PGDATABASE" \
+      --db-filter="$PGDATABASE" \
       --db_user="$DB_ENV_POSTGRES_USER" \
       --db_password="$DB_ENV_POSTGRES_PASSWORD" \
       "$@"
@@ -66,8 +65,8 @@ case "$1" in
       --config='/etc/odoo/openerp-server.conf' \
       --db_host="$DB_PORT_5432_TCP_ADDR" \
       --db_port="$DB_PORT_5432_TCP_PORT" \
-      --database="$database" \
-      --db-filter="$database" \
+      --database="$PGDATABASE" \
+      --db-filter="$PGDATABASE" \
       --db_user="$DB_ENV_POSTGRES_USER" \
       --db_password="$DB_ENV_POSTGRES_PASSWORD" \
       "$@"
