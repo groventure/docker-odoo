@@ -41,22 +41,37 @@ case "$1" in
     shift
     exec openerp-server \
       --config='/etc/odoo/openerp-server.conf' \
+      --db_host="$PGHOST" \
+      --db_port="$PGPORT" \
+      --db_user="$PGUSER" \
+      --db_password="$PGPASSWORD" \
       --database="$PGDATABASE" \
       --db-filter="$PGDATABASE" \
+      --workers=0 \
       "$@"
     ;;
   -*)
     exec openerp-server \
       --config='/etc/odoo/openerp-server.conf' \
+      --db_host="$PGHOST" \
+      --db_port="$PGPORT" \
+      --db_user="$PGUSER" \
+      --db_password="$PGPASSWORD" \
       --database="$PGDATABASE" \
       --db-filter="$PGDATABASE" \
+      --workers=0 \
       "$@"
     ;;
   *)
     exec \
       --config='/etc/odoo/openerp-server.conf' \
+      --db_host="$PGHOST" \
+      --db_port="$PGPORT" \
+      --db_user="$PGUSER" \
+      --db_password="$PGPASSWORD" \
       --database="$PGDATABASE" \
       --db-filter="$PGDATABASE" \
+      --workers=0 \
       "$@"
 esac
 
