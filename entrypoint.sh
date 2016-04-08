@@ -36,6 +36,12 @@ fi
 : ${PGDATABASE:=${DB_ENV_POSTGRES_DB:=$DB_ENV_POSTGRES_USER}}
 export PGHOST PGPORT PGUSER PGPASSWORD PGDATABASE
 
+if [[ "$PGUSER" != 'postgres' ]]; then
+  psql -c 'ALTER DATABASE "'"$PGDATABASE"'" OWNER TO "'"$PGUSER"'"'
+  psql -c 'ALTER USER "'"$PGUSER"'" WITH NOCREATEDB'
+  psql -c 'ALTER USER "'"$PGUSER"'" WITH NOSUPERUSER'
+fi
+
 case "$1" in
   --)
     shift
