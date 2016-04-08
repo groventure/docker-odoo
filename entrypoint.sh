@@ -52,35 +52,35 @@ export PGHOST PGPORT PGUSER PGPASSWORD
 database="$(_get_value "$DB_ENV_POSTGRES_USER" "$DB_ENV_POSTGRES_DB")"
 
 case "$1" in
-	--)
-		shift
-		exec openerp-server \
-		  --db_host="$DB_PORT_5432_TCP_ADDR" \
-		  --db_port="$DB_PORT_5432_TCP_PORT" \
-		  --database="$database" \
-		  --db-filter="$database" \
-		  --db_user="$DB_ENV_POSTGRES_USER" \
-		  --db_password="$DB_ENV_POSTGRES_PASSWORD" \
-			"$@"
-		;;
-	-*)
-		exec openerp-server \
-		  --db_host="$DB_PORT_5432_TCP_ADDR" \
-		  --db_port="$DB_PORT_5432_TCP_PORT" \
-		  --database="$database" \
-		  --db-filter="$database" \
-		  --db_user="$DB_ENV_POSTGRES_USER" \
-		  --db_password="$DB_ENV_POSTGRES_PASSWORD" \
-			"$@"
-		;;
-	*)
-		exec --db_host="$DB_PORT_5432_TCP_ADDR" \
-		  --db_port="$DB_PORT_5432_TCP_PORT" \
-		  --database="$database" \
-		  --db-filter="$database" \
-		  --db_user="$DB_ENV_POSTGRES_USER" \
-		  --db_password="$DB_ENV_POSTGRES_PASSWORD" \
-			"$@"
+  --)
+    shift
+    exec openerp-server \
+      --db_host="$DB_PORT_5432_TCP_ADDR" \
+      --db_port="$DB_PORT_5432_TCP_PORT" \
+      --database="$database" \
+      --db-filter="$database" \
+      --db_user="$DB_ENV_POSTGRES_USER" \
+      --db_password="$DB_ENV_POSTGRES_PASSWORD" \
+      "$@"
+    ;;
+  -*)
+    exec openerp-server \
+      --db_host="$DB_PORT_5432_TCP_ADDR" \
+      --db_port="$DB_PORT_5432_TCP_PORT" \
+      --database="$database" \
+      --db-filter="$database" \
+      --db_user="$DB_ENV_POSTGRES_USER" \
+      --db_password="$DB_ENV_POSTGRES_PASSWORD" \
+      "$@"
+    ;;
+  *)
+    exec --db_host="$DB_PORT_5432_TCP_ADDR" \
+      --db_port="$DB_PORT_5432_TCP_PORT" \
+      --database="$database" \
+      --db-filter="$database" \
+      --db_user="$DB_ENV_POSTGRES_USER" \
+      --db_password="$DB_ENV_POSTGRES_PASSWORD" \
+      "$@"
 esac
 
 exit 1
