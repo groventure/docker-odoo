@@ -55,6 +55,7 @@ case "$1" in
   --)
     shift
     exec openerp-server \
+      --config='/etc/odoo/openerp-server.conf' \
       --db_host="$DB_PORT_5432_TCP_ADDR" \
       --db_port="$DB_PORT_5432_TCP_PORT" \
       --database="$database" \
@@ -65,6 +66,7 @@ case "$1" in
     ;;
   -*)
     exec openerp-server \
+      --config='/etc/odoo/openerp-server.conf' \
       --db_host="$DB_PORT_5432_TCP_ADDR" \
       --db_port="$DB_PORT_5432_TCP_PORT" \
       --database="$database" \
@@ -74,7 +76,9 @@ case "$1" in
       "$@"
     ;;
   *)
-    exec --db_host="$DB_PORT_5432_TCP_ADDR" \
+    exec \
+      --config='/etc/odoo/openerp-server.conf' \
+      --db_host="$DB_PORT_5432_TCP_ADDR" \
       --db_port="$DB_PORT_5432_TCP_PORT" \
       --database="$database" \
       --db-filter="$database" \
