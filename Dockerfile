@@ -1,5 +1,5 @@
 FROM debian:jessie
-MAINTAINER Hellyna NG <hellyna@groventure.com>
+MAINTAINER Hellyna NG <hellyna@hellyna.com>
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
@@ -30,8 +30,7 @@ RUN set -x; \
         && apt-get -y install -f --no-install-recommends \
         && rm -rf /var/lib/apt/lists/* odoo.deb
 
-# Copy entrypoint script and Odoo configuration file
-COPY ./entrypoint.sh /
+# Copy Odoo configuration file
 COPY ./openerp-server.conf /etc/odoo/
 RUN chown odoo /etc/odoo/openerp-server.conf
 
@@ -43,8 +42,10 @@ VOLUME ["/var/lib/odoo", "/mnt/extra-addons"]
 # Set the default config file
 ENV OPENERP_SERVER /etc/odoo/openerp-server.conf
 
+# Copy entrypoint script
+COPY ./entrypoint.py /
+
 # Set default user when running the container
 USER odoo
 
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["openerp-server"]
+ENTRYPOINT ["/entrypoint.py"]
