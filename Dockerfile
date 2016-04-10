@@ -30,10 +30,6 @@ RUN set -x; \
         && apt-get -y install -f --no-install-recommends \
         && rm -rf /var/lib/apt/lists/* odoo.deb
 
-# Copy Odoo configuration file
-COPY ./openerp-server.conf /etc/odoo/
-RUN chown odoo /etc/odoo/openerp-server.conf
-
 # Mount /var/lib/odoo to allow restoring filestore and /mnt/extra-addons for users addons
 RUN mkdir -p /mnt/extra-addons \
         && chown -R odoo /mnt/extra-addons
@@ -47,5 +43,8 @@ COPY ./entrypoint.py /
 
 # Set default user when running the container
 USER odoo
+
+# Copy Odoo configuration file
+COPY ./openerp-server.conf /etc/odoo/
 
 ENTRYPOINT ["/entrypoint.py"]
