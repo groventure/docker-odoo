@@ -18,6 +18,7 @@ class ServeCmd(Cmd):
     def callps(self, *args, **kwargs):
         from subprocess import Popen
 
+        print('subprocess: {0}'.format(args[0]))
         ps = Popen(*args, **kwargs)
         self.ret = ps.wait()
         return self.ret
@@ -68,6 +69,8 @@ class ServeCmd(Cmd):
                     .format(env['PGUSER'])
                 )
 
+        odoo_args = self.parsed_args.odoo_args[1:]
+
         if self.parsed_args.autoset or self.parsed_args.single:
             openerp_server_args = [
                 'openerp-server',
@@ -78,13 +81,13 @@ class ServeCmd(Cmd):
                 '--database', env['PGDATABASE'],
                 '--db-filter', env['PGDATABASE'],
             ]
-            openerp_server_args.extend(self.parsed_args.odoo_args)
+            openerp_server_args.extend(odoo_args)
 
             self.callps(openerp_server_args)
             return self.ret
 
         openerp_server_args = ['openerp-server']
-        openerp_server_args.extend(self.parsed_args.odoo_args)
+        openerp_server_args.extend(odoo_args)
 
         self.callps(openerp_server_args)
         return self.ret
