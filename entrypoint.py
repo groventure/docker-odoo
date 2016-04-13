@@ -33,12 +33,21 @@ class ServeCmd(Cmd):
                     file=sys.stderr)
 
 
+    def execvp(self, args):
+        from os import execvp
+
+        print('execvp: {0}'.format(args))
+        # Point of no return.
+        execvp(args[0], args)
+
+
     def psql_query(self, query):
         self.callps(['psql', '-c', query])
 
 
     def run(self):
         from os import environ as env
+        from os import execvp
 
         self.chkenv('POSTGRES_PORT_5432_TCP_ADDR')
         self.chkenv('POSTGRES_PORT_5432_TCP_PORT')
@@ -70,6 +79,7 @@ class ServeCmd(Cmd):
                 )
 
         odoo_args = self.parsed_args.odoo_args[1:]
+        openerp_server_args = ['openerp-server']
 
         if self.parsed_args.autoset or self.parsed_args.single:
             openerp_server_args = [
@@ -81,16 +91,11 @@ class ServeCmd(Cmd):
                 '--database', env['PGDATABASE'],
                 '--db-filter', env['PGDATABASE'],
             ]
-            openerp_server_args.extend(odoo_args)
 
-            self.callps(openerp_server_args)
-            return self.ret
-
-        openerp_server_args = ['openerp-server']
+        # Append args after '--'
         openerp_server_args.extend(odoo_args)
 
-        self.callps(openerp_server_args)
-        return self.ret
+        self.execvp(openerp_server_args)
 
 
 def serve(parsed_args, raw_args):
