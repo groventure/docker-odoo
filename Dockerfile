@@ -7,9 +7,12 @@ RUN set -x; \
         && apt-get install -y --no-install-recommends \
             ca-certificates \
             curl \
+            ghostscript \
+            libicu52 \
             node-less \
             node-clean-css \
             python-pyinotify \
+            python-pythonmagick \
             python-renderpm \
             python-simplejson \
             python-support \
