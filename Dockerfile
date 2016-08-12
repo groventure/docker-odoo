@@ -21,8 +21,8 @@ RUN set -x; \
         && echo '40e8b906de658a2221b15e4e8cd82565a47d7ee8 wkhtmltox.deb' | sha1sum -c - \
         && dpkg --force-depends -i wkhtmltox.deb \
         && apt-get -y install -f --no-install-recommends \
-        ;  phantomjs_dir='phantomjs-2.1.1-linux-x86_64' \
-        && curl -LO "https://bitbucket.org/ariya/phantomjs/downloads/${phantomjs_dir}.tar.bz2" \
+        &&  phantomjs_dir='phantomjs-2.1.1-linux-x86_64' \
+        ;  curl -LO "https://bitbucket.org/ariya/phantomjs/downloads/${phantomjs_dir}.tar.bz2" \
         && tar -xvf "${phantomjs_dir}.tar.bz2" \
         && install -Dvm0755 "${phantomjs_dir}/bin/phantomjs" /usr/local/bin/phantomjs \
         && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false npm bzip2 \
