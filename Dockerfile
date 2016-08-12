@@ -5,19 +5,28 @@ MAINTAINER Hellyna NG <hellyna@hellyna.com>
 RUN set -x; \
         apt-get update \
         && apt-get install -y --no-install-recommends \
+            bzip2 \
             ca-certificates \
             curl \
+            libfontconfig1 \
             node-less \
             node-clean-css \
+            python-odf \
             python-pyinotify \
             python-renderpm \
             python-simplejson \
             python-support \
+            python-xlrd \
         && curl -o wkhtmltox.deb -SL http://nightly.odoo.com/extra/wkhtmltox-0.12.1.2_linux-jessie-amd64.deb \
         && echo '40e8b906de658a2221b15e4e8cd82565a47d7ee8 wkhtmltox.deb' | sha1sum -c - \
         && dpkg --force-depends -i wkhtmltox.deb \
         && apt-get -y install -f --no-install-recommends \
-        && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false npm \
+        ;  phantomjs_dir='phantomjs-2.1.1-linux-x86_64' \
+        && curl -LO "https://bitbucket.org/ariya/phantomjs/downloads/${phantomjs_dir}.tar.bz2" \
+        && tar -xvf "${phantomjs_dir}.tar.bz2" \
+        && install -Dvm0755 "${phantomjs_dir}/bin/phantomjs" /usr/local/bin/phantomjs \
+        && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false npm bzip2 \
+        && rm -rf "$phantomjs_dir" \
         && rm -rf /var/lib/apt/lists/* wkhtmltox.deb
 
 # Install Odoo
