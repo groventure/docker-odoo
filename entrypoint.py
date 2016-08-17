@@ -78,11 +78,11 @@ class ServeCmd(Cmd):
                     .format(env['PGUSER'])
                 )
 
-        if self.parsed_args.setuid is not None:
-            setuid(self.parsed_args.setuid)
-
         if self.parsed_args.setgid is not None:
             setgid(self.parsed_args.setgid)
+
+        if self.parsed_args.setuid is not None:
+            setuid(self.parsed_args.setuid)
 
         odoo_args = self.parsed_args.odoo_args[1:]
         openerp_server_args = ['openerp-server']
