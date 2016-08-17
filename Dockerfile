@@ -55,4 +55,5 @@ ENV OPENERP_SERVER /etc/odoo/openerp-server.conf
 # Set default user when running the container
 USER odoo
 
-ENTRYPOINT ["/entrypoint.py"]
+# Gitlab requires entrypoint to be /bin/bash
+ENTRYPOINT ["/bin/bash"]
