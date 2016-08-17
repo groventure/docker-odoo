@@ -47,7 +47,7 @@ class ServeCmd(Cmd):
 
     def run(self):
         from os import environ as env
-        from os import execvp
+        from os import setuid, setgid
 
         self.chkenv('POSTGRES_PORT_5432_TCP_ADDR')
         self.chkenv('POSTGRES_PORT_5432_TCP_PORT')
@@ -77,6 +77,12 @@ class ServeCmd(Cmd):
                     'ALTER USER "{0}" WITH NOSUPERUSER'
                     .format(env['PGUSER'])
                 )
+
+        if self.parsed_args.setuid is not None:
+            setuid(self.parsed_args.setuid)
+
+        if self.parsed_args.setgid is not None:
+            setgid(self.parsed_args.setgid)
 
         odoo_args = self.parsed_args.odoo_args[1:]
         openerp_server_args = ['openerp-server']
@@ -113,6 +119,18 @@ def main(args=None):
     p = ArgumentParser(description='odoo docker image')
     sp = p.add_subparsers(help='sub-command help', dest='command')
     sp_serve = sp.add_parser('serve', help='start the server')
+    sp_serve.add_argument(
+        '--setuid',
+        type=int,
+        default=104,
+        help='Set the uid of the odoo process.',
+    )
+    sp_serve.add_argument(
+        '--setgid',
+        type=int,
+        default=107,
+        help='Set the gid of the odoo process.',
+    )
     sp_serve.add_argument(
         '--autoset',
         help='Automatically set the arguments of odoo.py',

@@ -53,7 +53,7 @@ VOLUME ["/var/lib/odoo", "/mnt/extra-addons"]
 ENV OPENERP_SERVER /etc/odoo/openerp-server.conf
 
 # Set default user when running the container
-USER odoo
+USER root
 
 # Gitlab requires entrypoint to be nothing.
 ENTRYPOINT []
