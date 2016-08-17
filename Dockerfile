@@ -8,9 +8,13 @@ RUN set -x; \
             bzip2 \
             ca-certificates \
             curl \
+            # Needed by ci
+            git \
             libfontconfig1 \
             node-less \
             node-clean-css \
+            # Needed by ci
+            openssh-client \
             python-odf \
             python-pyinotify \
             python-renderpm \
